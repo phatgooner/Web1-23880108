@@ -107,6 +107,10 @@ a.readmore {
     margin-top: -1px !important;
 }
 
+.web1-text-blue {
+    color: var(--web1-blue);
+}
+
 /* About Us */
 #aboutus {
     background-color: var(--web1-pink);

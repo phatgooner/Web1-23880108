@@ -238,9 +238,12 @@
         <div class="row text-center py-5">
             {{#each data}}
             <div class="col-lg-3 col-md-6 col-sm-12">
-                <img src="{{imagepath}}" alt="{{name}}">
+                <img src="{{imagepath}}" alt="{{name}}"
+                onmouseover="setActiveImgPath(this,'{{imagepath}}')"
+                onmouseout="setActiveImgPath(this,'{{imagepath}}', false)"
+                onclick="loadData('products/{{id}}', 'details-template', 'content')">
                 <h3>{{name}}</h3>
-                <p>{{summary}}</summary>
+                <p class="text-black-50">{{summary}}</summary>
                 </p>
                 <a class="readmore btn btn-link pt-0" href="#"
                 onclick="loadData('products/{{id}}', 'details-template', 'content')">Read more</a>
@@ -263,7 +266,7 @@
                 </div>
                 <div>
                     <h3>{{name}}</h3>
-                    <p class="text-justify me-4">{{summary}}</p>
+                    <p class="text-justify text-black-50 me-4">{{summary}}</p>
                 </div>
             </div>
             {{/each}}
@@ -282,7 +285,17 @@
 
     <script>
         loadData('products', 'products-template', 'products');
-        loadData('news', 'news-template', 'news');        
+        loadData('news', 'news-template', 'news');
+
+        function setActiveImgPath(img, imagePath, isActive = true) {
+            if (isActive) {
+                img.src = imagePath.replace('.', '-active.');
+            }
+            else {
+                img.src = imagePath;
+            }
+            img.nextElementSibling.classList.toggle('web1-text-blue');
+        };
     </script>
 </body>
 
