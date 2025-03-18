@@ -75,6 +75,21 @@
 
     </header>
 
+    <!-- Banner -->
+    <section id="banner-small"></section>
+
+    <!-- Content -->
+    <section class="container py-5">
+        <div class="row">
+            <div class="col-lg-9 col-md-8 col-sm-12" id="blogs">
+                <!-- Handlebars Template -->
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-12" id="blogs-categories">
+                <!-- Handlebars Template -->
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="text-center container-fluid text-white py-3">
         <ul class="nav justify-content-center my-2" id="menu-footer">
@@ -146,6 +161,77 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
+
+    <!--HandlebarsJS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js"
+        integrity="sha512-E1dSFxg+wsfJ4HKjutk/WaCzK7S2wv1POn1RRPGh8ZK+ag9l244Vqxji3r6wgz9YBf6+vhQEYJZpSjqWFPg9gg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/23880108.js"></script>
+    <script src="js/handlebars-pagination-helper.js"></script>
+
+    <!--Templates-->
+    <script id="blogs-template" type="text/x-handlebars-template">
+        <h1>Blogs</h1>
+        {{#each data}}
+        <div class="my-5 clearfix">
+            <h4>{{name}}</h4>            
+            <p class="text-black-50">
+                by {{author}} in <a href="#">Blog. {{id}}</a> on {{formatDate date}}. <a href="#">Comments ({{comments.length}})</a>
+            </p>
+            <img src="{{thumbpath}}" alt="{{name}}" class="rounded-4 float-start me-3">
+            <p class="text-justify pe-3 text-black-50">{{summary}}</p>
+            <a href="#">Read more</a>            
+        </div>
+        {{/each}}
+
+        {{#pagination currentPage pageCount}}
+        <nav aria-label="Page navigation" id="blogs-pagination">
+            <ul class="pagination    ">
+                {{#each pages}}
+                {{#if isCurrent}}
+                <li class="page-item disabled" aria-current="page">
+                    <a class="page-link" href="#" onclick="loadBlogs('{{../../request}}', parseInt('{{page}}'))">{{page}}</a>
+                </li>
+                {{/if}}
+                {{#unless isCurrent}}
+                <li class="page-item"><a class="page-link" href="#" onclick="loadBlogs('{{../../request}}', parseInt('{{page}}'))">{{page}}</a></li>
+                {{/unless}}
+                {{/each}}
+            </ul>
+        </nav>
+        {{/pagination}}
+    </script>
+
+    <script id="blogs-categories-template" type="text/x-handlebars-template">
+        <h1>Categories</h1>
+        <ul class="my-5">        
+            {{#each data}}        
+            <li>
+                <a href="#" class="text-decoration-none text-black-50" onclick="loadBlogs('blogs/categories/{{id}}')">                
+                    {{name}}
+                </a>
+            </li>
+            {{/each}}
+        </ul>
+    </script>
+
+    <!-- Load Data -->
+    <script>
+        loadBlogs('blogs');
+        loadData('blogs-categories', 'blogs-categories-template', 'blogs-categories');
+
+        Handlebars.registerHelper('formatDate', (date) => {
+            let formatDate = new Date(date);
+            let options = {
+                weekday: 'short',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                timeZoneName: 'short'
+            }
+            return formatDate.toLocaleString('en-US', options);
+        });       
+    </script>
 </body>
 
 </html>

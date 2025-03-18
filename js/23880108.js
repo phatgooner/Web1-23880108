@@ -10,3 +10,16 @@ async function loadData(req, templateId, viewId) {
     var view = document.getElementById(viewId);
     view.innerHTML = template(context);
 }
+
+async function loadBlogs(req, currentPage = 1) {
+    const res = await fetch(`${API}/${req}?page=${currentPage}`);
+    const context = await res.json();
+    context.currentPage = currentPage;
+    context.request = req;
+
+    var source = document.getElementById('blogs-template').innerHTML;
+    var template = Handlebars.compile(source);
+
+    var view = document.getElementById('blogs');
+    view.innerHTML = template(context);
+}
