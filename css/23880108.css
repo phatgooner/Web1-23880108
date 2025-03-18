@@ -45,6 +45,18 @@ h1 {
     color: var(--web1-green);
 }
 
+/* Form */
+::placeholder {
+    font-weight: 100 !important;
+    /* Ultra-light */
+    color: #bbb !important;
+    /* Optional: Lighter color for a softer effect */
+    font-style: italic !important;
+    /* Optional: Make it feel even lighter */
+    opacity: 0.7 !important;
+    /* Adjust visibility */
+}
+
 /* Banner */
 #banner {
     background-image: url('../images/bg-banner.gif');
