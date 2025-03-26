@@ -1,4 +1,4 @@
-var lonLat = [106.682830, 10.757800];
+var lonLat = [106.681832, 10.762047];
 var map = new ol.Map({
     target: 'map',
     layers: [
