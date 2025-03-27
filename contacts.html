@@ -30,12 +30,6 @@
     <!-- Open Layer -->
     <script src="https://cdn.jsdelivr.net/npm/ol@v10.4.0/dist/ol.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v10.4.0/ol.css">
-
-    <!-- Captcha -->
-
-    <script
-        src="https://www.google.com/recaptcha/enterprise.js?render=6LftZAErAAAAAH9E-iNjdejUHqb6hb9F9VuEYKuC"></script>
-
 </head>
 
 <body>
@@ -245,11 +239,14 @@
     <script src="./js/map.js"></script>
 
     <!-- Captcha -->
+    <script
+        src="https://www.google.com/recaptcha/enterprise.js?render=6LftZAErAAAAAH9E-iNjdejUHqb6hb9F9VuEYKuC"></script>
     <script>
         function onSubmit(e) {
             e.preventDefault();
+
             grecaptcha.enterprise.ready(async () => {
-                const token = await grecaptcha.enterprise.execute('6LdRnAErAAAAAMv6-OzETq6xphEAQP89MwKzuA-l', { action: 'submit' }).then(async function (token) {
+                const token = await grecaptcha.enterprise.execute('6LfJpgErAAAAAMdQmOYWn0nJhZTpAhzvbFOytbsc', { action: 'submit' }).then(async function (token) {
                     let response = await fetch('verify.php', {
                         method: 'POST',
                         headers: {
