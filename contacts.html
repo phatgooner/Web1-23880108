@@ -246,7 +246,7 @@
             e.preventDefault();
 
             grecaptcha.enterprise.ready(async () => {
-                const token = await grecaptcha.enterprise.execute('6LfJpgErAAAAAMdQmOYWn0nJhZTpAhzvbFOytbsc', { action: 'submit' }).then(async function (token) {
+                const token = await grecaptcha.enterprise.execute('6LfuqQErAAAAAMQDHJ2ZNoOlnplbHGEqMT8-7ZMm', { action: 'submit' }).then(async function (token) {
                     let response = await fetch('verify.php', {
                         method: 'POST',
                         headers: {
