@@ -26,7 +26,7 @@ async function loadBlogs(req, currentPage = 1) {
 }
 
 async function getAuthenticateToken(username, password) {
-    let res = await fetch(`${AUTHENTICATE_API}/authenticate`, {
+    let response = await fetch(`${AUTHENTICATE_API}/authenticate`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -34,8 +34,8 @@ async function getAuthenticateToken(username, password) {
         },
         body: JSON.stringify({ username, password })
     });
-    let result = await res.json();
-    if (res.status == 200) {
+    let result = await response.json();
+    if (response.status == 200) {
         return result.token;
     }
     throw new Error(result.message);
