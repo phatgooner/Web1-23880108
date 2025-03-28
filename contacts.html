@@ -64,7 +64,9 @@
                             <a class="nav-link active" href="contacts.html">Contacts</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalLogin">Login</a>
+                            <a class="nav-link linkLogin" href="#" data-bs-toggle="modal"
+                                data-bs-target="#modalLogin">Login</a>
+                            <a class="nav-link linkLogout" href="#" onclick="logout()" style="display: none;">Logout</a>
                         </li>
                     </ul>
                     <form class="d-flex my-2 my-lg-0 border rounded-pill" id="formSearch">
@@ -186,7 +188,8 @@
                 <a class="nav-link active" href="contacts.html">Contacts</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalLogin">Login</a>
+                <a class="nav-link linkLogin" href="#" data-bs-toggle="modal" data-bs-target="#modalLogin">Login</a>
+                <a class="nav-link linkLogout" href="#" onclick="logout()" style="display: none;">Logout</a>
             </li>
         </ul>
         <p class="text-white-50 pt-5">Copyright &copy; 2025 by Nguyen Tien Phat - 23880108</p>
@@ -202,7 +205,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="#" method="post" id="formLogin">
+                    <form action="#" method="post" id="formLogin" onsubmit="login(event)">
                         <h3 class="text-center">Login Form</h3>
                         <div class="mb-3">
                             <input type="text" name="username" id="username" placeholder="Username"
@@ -216,7 +219,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-
+                    <div class="text-danger" id="errorMessage"></div>
                 </div>
             </div>
         </div>
@@ -249,6 +252,8 @@
         src="https://www.google.com/recaptcha/enterprise.js?render=6LfuqQErAAAAAMQDHJ2ZNoOlnplbHGEqMT8-7ZMm"></script>
 
     <script>
+        checkLogin();
+
         function onSubmit(e) {
             e.preventDefault();
 
@@ -276,10 +281,10 @@
 
         async function sendMail() {
             let responseMessage = document.getElementById('responseMessage');
+
             try {
                 let token = await getAuthenticateToken('test', '1c3cr3@m');
-                console.log(`Token is: ${token}`);
-                console.log(`AUTHENTICATE_API is: ${AUTHENTICATE_API}`);
+
                 let postData = {
                     name: document.getElementById('name').value,
                     email: document.getElementById('email').value,
@@ -287,7 +292,7 @@
                     message: document.getElementById('message').value,
                     copy: document.getElementById('copy').checked
                 }
-                console.log(`postData is: ${JSON.stringify(postData)}`);
+
                 let response = await fetch(`${AUTHENTICATE_API}/send`, {
                     method: 'POST',
                     headers: {
@@ -297,6 +302,7 @@
                     },
                     body: JSON.stringify(postData)
                 });
+
                 let result = await response.json();
                 if (response.status == 200) {
                     responseMessage.innerHTML = result.message;
@@ -306,6 +312,7 @@
                     throw new Error(result.message);
                 }
             }
+
             catch (error) {
                 responseMessage.innerHTML = error;
                 responseMessage.className = 'text-danger';
