@@ -150,7 +150,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <div id="responseMessage" class="text-info"></div>
+                    <div id="responseMessage" class="text-success"></div>
                 </div>
                 <div class="col">
                     <div class="text-end">
@@ -242,6 +242,8 @@
     <!-- map.js -->
     <script src="./js/map.js"></script>
 
+    <script src="./js/23880108.js"></script>
+
     <!-- Captcha -->
     <script
         src="https://www.google.com/recaptcha/enterprise.js?render=6LfuqQErAAAAAMQDHJ2ZNoOlnplbHGEqMT8-7ZMm"></script>
@@ -274,11 +276,42 @@
             });
         }
 
-        function sendMail() {
+        async function sendMail() {
             let responseMessage = document.getElementById('responseMessage');
-            responseMessage.innerHTML = 'OK';
-            responseMessage.classList.remove();
-            responseMessage.classList.toggle('text-danger');
+            try {
+                let token = await getAuthenticationToken('test', '1c3cr3@m');
+                let postData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    subject: document.getElementById('subject').value,
+                    message: document.getElementById('message').value,
+                    copy: document.getElementById('copy').checked
+                }
+                let response = await fetch(`${AUTHENTICATE_API}/send`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer' + token
+                    },
+                    body: JSON.stringify(postData)
+                });
+                let result = await response.json();
+                if (response.status == 200) {
+                    responseMessage.innerHTML = result.message;
+                    responseMessage.classList.remove();
+                    responseMessage.classList.toggle('text-success');
+                }
+                else {
+                    throw new Error(result.message);
+                }
+            }
+            catch (error) {
+                responseMessage.innerHTML = error;
+                responseMessage.classList.remove();
+                responseMessage.classList.toggle('text-danger');
+            }
+
         }
     </script>
 </body>

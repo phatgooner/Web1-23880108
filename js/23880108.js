@@ -1,4 +1,5 @@
 const API = 'https://web1-api.vercel.app/api';
+const AUTHENTICATE_API = 'https://web1-api.vercel.app/users';
 
 async function loadData(req, templateId, viewId) {
     const res = await fetch(`${API}/${req}`);
@@ -22,4 +23,20 @@ async function loadBlogs(req, currentPage = 1) {
 
     var view = document.getElementById('blogs');
     view.innerHTML = template(context);
+}
+
+async function getAuthenticateToken(username, password) {
+    let res = await fetch(`${AUTHENTICATE_API}/authenticate`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+    });
+    let result = await res.json();
+    if (res.status == 200) {
+        return result.token;
+    }
+    throw new Error(result.message);
 }
