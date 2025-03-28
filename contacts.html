@@ -278,14 +278,16 @@
             let responseMessage = document.getElementById('responseMessage');
             try {
                 let token = await getAuthenticateToken('test', '1c3cr3@m');
-                console.log(token);
-                // let postData = {
-                //     name: document.getElementById('name').value,
-                //     email: document.getElementById('email').value,
-                //     subject: document.getElementById('subject').value,
-                //     message: document.getElementById('message').value,
-                //     copy: document.getElementById('copy').checked
-                // }
+                console.log(`Token is: ${token}`);
+                console.log(`AUTHENTICATE_API is: ${AUTHENTICATE_API}`);
+                let postData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    subject: document.getElementById('subject').value,
+                    message: document.getElementById('message').value,
+                    copy: document.getElementById('copy').checked
+                }
+                console.log(`postData is: ${postData}`);
                 // let response = await fetch(`${AUTHENTICATE_API}/send`, {
                 //     method: 'POST',
                 //     headers: {
