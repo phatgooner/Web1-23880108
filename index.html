@@ -246,12 +246,11 @@
                 <img src="{{imagepath}}" alt="{{name}}"
                 onmouseover="setActiveImgPath(this,'{{imagepath}}')"
                 onmouseout="setActiveImgPath(this,'{{imagepath}}', false)"
-                onclick="loadData('products/{{id}}', 'details-template', 'content')">
+                onclick="location.assign('?request=products/{{id}}')">
                 <h3>{{name}}</h3>
                 <p class="text-black-50">{{summary}}</summary>
                 </p>
-                <a class="readmore btn btn-link pt-0" href="#"
-                onclick="loadData('products/{{id}}', 'details-template', 'content')">Read more</a>
+                <a class="readmore btn btn-link pt-0" href="?request=products/{{id}}">Read more</a>
             </div>
             {{/each}}
         </div>
@@ -266,8 +265,7 @@
                     <div class="date text-white text-center rounded-4 py-1">
                         <h4>{{date}}</h4>
                     </div>
-                    <a class="readmore btn btn-link" href="#"
-                    onclick="loadData('news/{{id}}', 'details-template', 'content')">Read more</a>
+                    <a class="readmore btn btn-link" href="?request=news/{{id}}">Read more</a>
                 </div>
                 <div>
                     <h3>{{name}}</h3>
@@ -290,10 +288,16 @@
 
     <!-- Load Data -->
     <script>
-        checkLogin();
-
-        loadData('products', 'products-template', 'products');
-        loadData('news', 'news-template', 'news');
+        let searchParams = new URLSearchParams(location.search);
+        let request = searchParams.get('request');
+        if (request) {
+            loadData(request, 'details-template', 'content');
+        }
+        else {
+            checkLogin();
+            loadData('products', 'products-template', 'products');
+            loadData('news', 'news-template', 'news');
+        };
 
         function setActiveImgPath(img, imagePath, isActive = true) {
             if (isActive) {
@@ -304,6 +308,7 @@
             }
             img.nextElementSibling.classList.toggle('web1-text-blue');
         };
+
     </script>
 </body>
 
