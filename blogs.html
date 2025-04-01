@@ -264,7 +264,10 @@
                             Submit Comment
                         </button>                        
                     </div>
-                </div>                
+                </div> 
+                <div class="text-center py-2">
+                    <div class="text-success" id="responseMessage"></div>
+                </div>               
             </form>
         </div>
         
@@ -316,6 +319,7 @@
 
         async function addComment(e) {
             e.preventDefault();
+            let responseMessage = document.getElementById('responseMessage');
 
             try {
                 let token = localStorage.getItem('token');
@@ -340,15 +344,19 @@
 
                 let result = await res.json();
                 if (res.status == 200) {
-                    alert('Comment posted!')
-                    seeDetails(postData.blogId);
+                    responseMessage.innerHTML = result.message;
+                    responseMessage.className = 'text-success';
+                    setTimeout(() => {
+                        seeDetails(postData.blogId);
+                    }, 1000);
                 }
                 else {
                     throw new Error(result.message);
                 }
             }
             catch (error) {
-                alert(error);
+                responseMessage.innerHTML = result.message;
+                responseMessage.className = 'text-danger';
             }
         }
     </script>
