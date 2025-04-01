@@ -64,6 +64,7 @@ async function login(event) {
 function displayControls(isLogin = true) {
     let linkLogins = document.getElementsByClassName('linkLogin');
     let linkLogouts = document.getElementsByClassName('linkLogout');
+    let commentForm = document.getElementById('leave-comment');
 
     let displayLogin = 'none';
     let displayLogout = 'block';
@@ -76,6 +77,7 @@ function displayControls(isLogin = true) {
         linkLogins[i].style.display = displayLogin;
         linkLogouts[i].style.display = displayLogout;
     }
+    commentForm.style.display = displayLogout;
 }
 
 async function checkLogin() {

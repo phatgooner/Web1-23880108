@@ -184,7 +184,7 @@
             </p>
             <img src="{{thumbpath}}" alt="{{name}}" class="rounded-4 float-start me-3">
             <p class="text-justify pe-3 text-black-50">{{summary}}</p>
-            <a href="#" onclick="loadData('blogs/{{id}}', 'blogs-content-template', 'blogs')">Read more</a>            
+            <a href="#" onclick="seeDetails('{{id}}')">Read more</a>            
         </div>
         {{/each}}
 
@@ -225,15 +225,15 @@
         <div class="my-5 clearfix">
             <h4>{{name}}</h4>
             <p class="text-black-50">
-                by {{author}} in <a href="#">Blog. {{id}}</a> on {{formatDate date}}. <a href="#comments">Comments
+                by {{author}} in <a href="#" id="BlogId">Blog. {{id}}</a> on {{formatDate date}}. <a href="#comments">Comments
                     ({{comments.length}})</a>
             </p>
             <img src="{{imagepath}}" alt="{{name}}" class="rounded-4 float-start img-fluid me-3">
             <div class="text-justify pe-3 text-black-50">{{{description}}}</div>            
         </div>
-        <div class="py-3">
+        <div class="py-3" id="leave-comment">
             <h3>Leave your comments</h3>
-            <form action="#" method="post" class="text-black-50">
+            <form action="#" method="post" class="text-black-50" onsubmit="addComment(event)">
                 <div class="row">
                     <div class="col-4">
                         <div class="mb-3">
@@ -250,7 +250,7 @@
                     </div>                    
                 </div>
                 <div class="mb-3">                    
-                    <textarea class="form-control" name="message" id="message" rows="3" placeholder="Enter your message" required></textarea>
+                    <textarea class="form-control" name="comment" id="comment" rows="3" placeholder="Enter your comment" required></textarea>
                 </div>
                 <div class="row">
                     <div class="col">
@@ -305,7 +305,51 @@
 
         async function goToComments(blogId) {
             await loadData(`blogs/${blogId}`, 'blogs-content-template', 'blogs');
+            checkLogin();
             window.location.href = "#comments";
+        }
+
+        async function seeDetails(blogId) {
+            await loadData(`blogs/${blogId}`, 'blogs-content-template', 'blogs');
+            checkLogin();
+        }
+
+        async function addComment(e) {
+            e.preventDefault();
+
+            try {
+                let token = localStorage.getItem('token');
+
+                let postData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    comment: document.getElementById('comment').value,
+                    blogId: parseInt(document.getElementById('BlogId').innerText.slice(6)),
+                    agree: document.getElementById('agree').checked
+                }
+
+                let res = await fetch(`${AUTHENTICATE_API}/comment`, {
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        "Authorization": 'Bearer ' + token
+                    },
+                    body: JSON.stringify(postData)
+                });
+
+                let result = await res.json();
+                if (res.status == 200) {
+                    alert('Comment posted!')
+                    seeDetails(postData.blogId);
+                }
+                else {
+                    throw new Error(result.message);
+                }
+            }
+            catch (error) {
+                alert(error);
+            }
         }
     </script>
 </body>
