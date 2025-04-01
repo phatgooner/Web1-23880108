@@ -48,10 +48,10 @@
                                 <span class="visually-hidden">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="about.html">About</a>
+                            <a class="nav-link" href="about.html">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="gallery.html">Gallery</a>
+                            <a class="nav-link active" href="gallery.html">Gallery</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="blogs.html">Blogs</a>
@@ -83,29 +83,9 @@
     <section id="banner-small"></section>
 
     <!-- Content -->
-    <div id="content">
-        <!-- About Us, Our Vision -->
-        <section class="container py-5">
-            <div class="row">
-                <div class="col-md-8 col-sm-12" id="about-us">
-                    <!-- Handlebars Template -->
-                </div>
-                <div class="col-md-4 col-sm-12" id="our-vision">
-                    <!-- Handlebars Template -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Testimonials -->
-        <section class="container-fluid py-5" id="testimonials">
-            <!-- Handlebars Template -->
-        </section>
-
-        <!-- Our Team -->
-        <section class="container py-5" id="our-team">
-            <!-- Handlebars Template -->
-        </section>
-    </div>
+    <section class="container py-5" id="content">
+        <!-- Handlebars Template -->
+    </section>
 
     <!-- Footer -->
     <footer class="text-center container-fluid text-white py-3">
@@ -114,10 +94,10 @@
                 <a class="nav-link" href="index.html" aria-current="page">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="about.html">About</a>
+                <a class="nav-link" href="about.html">About</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="gallery.html">Gallery</a>
+                <a class="nav-link active" href="gallery.html">Gallery</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="blogs.html">Blogs</a>
@@ -187,85 +167,39 @@
     <script src="js/23880108.js"></script>
 
     <!--Templates-->
-    <!-- About Us -->
-    <script id="about-us-template" type="text/x-handlebars-template">
-        <h1 class="pb-3">About Us</h1>
+    <script id="search-template" type="text/x-handlebars-template">
         {{#each data}}
-        <div>
-            <img src="{{thumbpath}}" alt="{{name}}" class="float-start rounded-4 me-3">
-            <div class="text-black-50 text-justify pe-5">{{{summary}}}</div>
-            <a href="#" class="btn btn-link readmore ps-0"
-                onclick="loadData('aboutus/{{id}}','details-template', 'content')">Read more</a>
+        <div class="py-4">
+            <a class="text-decoration-none" href="#" onclick="loadData('{{type}}/{{id}}', 'details-template', 'content')">
+                <h1 class="text-black">{{name}}</h1>
+                <div class="text-black-50 text-justify">{{summary}}</div>
+            </a>
         </div>
         {{/each}}
     </script>
 
-    <!-- Details -->
     <script id="details-template" type="text/x-handlebars-template">
-        <div class="container overflow-auto py-3">    
-        {{#each data}}
+        {{#each data}}        
             <h1 class="py-3">{{name}}</h1>
-            <img src="{{imagepath}}" alt="{{name}}" class="float-start rounded-4 me-4 mb-4">
-            <div class="text-justify">{{{description}}}</div>
-            {{/each}}
-            </div>
-    </script>
-
-    <!-- Our Vision -->
-    <script id="our-vision-template" type="text/x-handlebars-template">
-        <h1 class="pb-3">Our Vision</h1>
-        {{#each data}}
-        <div class="clearfix mb-3">
-            <a href="#" onclick="loadData('visions/{{id}}','details-template', 'content')"
-            class="text-decoration-none">
-                <img src="{{thumbpath}}" alt="{{name}}" class="float-start rounded-4 me-3">
-                <h3 class="text-black">{{name}}</h3>
-                <div class="text-black-50 text-justify pe-3">{{summary}}</div>
-            </a>
-        </div>
-        {{/each}}             
-    </script>
-
-    <!-- Testimonials -->
-    <script id="testimonials-template" type="text/x-handlebars-template">
-        <div class="container">
-            <h1 class="text-white">Testimonials</h1>
-            <div class="row py-3">
-                {{#each data}}
-                <div class="col-md-4 col-sm-12 my-3">
-                    <p class="text-black-50 text-justify pe-3">{{summary}}</p>
-                    <span class="text-white">{{name}}</span> <br>
-                    <a href="#">{{email}}</a>
-                </div>
-                {{/each}}                
-            </div>
-        </div>
-    </script>
-
-    <!-- Our Team -->
-    <script id="our-team-template" type="text/x-handlebars-template">
-        <h1>Our Team</h1>
-        <div class="row py-3">
-            {{#each data}}
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <a href="#" onclick="loadData('team/{{id}}','details-template', 'content')" class="text-decoration-none">
-                    <img src="{{thumbpath}}" alt="{{name}}" class="mb-3 rounded-4 img-fluid">
-                    <h4 class="text-black">{{name}}</h4>
-                    <p class="text-black-50 mt-3 pe-1">{{summary}}</p>
-                </a>
-            </div>              
-            {{/each}}            
-        </div>
+            {{#if imagepath}}
+            <img src="{{imagepath}}" alt="{{name}}" class="float-start me-3">
+            {{/if}}
+            <div class="text-black-50 text-justify">{{{description}}}</div>
+        {{/each}}
     </script>
 
     <!-- Load Data -->
     <script>
         checkLogin();
 
-        loadData('aboutus', 'about-us-template', 'about-us');
-        loadData('visions', 'our-vision-template', 'our-vision');
-        loadData('testimonials', 'testimonials-template', 'testimonials');
-        loadData('team', 'our-team-template', 'our-team');
+        let searchParams = new URLSearchParams(location.search);
+        let keyword = searchParams.get('keyword');
+        if (keyword) {
+            keyword = keyword.trim();
+            if (keyword != '') {
+                loadData(`search?keyword=${keyword}`, 'search-template', 'content');
+            }
+        }
 
     </script>
 </body>
