@@ -259,26 +259,58 @@
         function onSubmit(e) {
             e.preventDefault();
 
-            grecaptcha.enterprise.ready(async () => {
-                const token = await grecaptcha.enterprise.execute('6LfuqQErAAAAAMQDHJ2ZNoOlnplbHGEqMT8-7ZMm', { action: 'submit' }).then(async function (token) {
-                    let response = await fetch('verify.php', {
+            try {
+                grecaptcha.enterprise.ready(async () => {
+                    const token = await grecaptcha.enterprise.execute('6LfuqQErAAAAAMQDHJ2ZNoOlnplbHGEqMT8-7ZMm', { action: 'submit' }).then(async function (token) {
+                        let response = await fetch('verify.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify({ 'g-token': token })
+                        });
+                        if (response.status == 200) {
+                            sendMail();
+                        }
+                    });
+                });
+            } catch (error) {
+                let responseMessage = document.getElementById('responseMessage');
+                responseMessage.className = 'text-success';
+                responseMessage.innerHTML = '';
+
+                grecaptcha.enterprise.ready(async function () {
+                    let token = await grecaptcha.enterprise.execute('6LfuqQErAAAAAMQDHJ2ZNoOlnplbHGEqMT8-7ZMm', { action: 'submit' });
+
+                    let url = `https://recaptchaenterprise.googleapis.com/v1/projects/web1-23880108/assessments?key=AIzaSyB1_Rx55cQiaVJGJtyf3QrpSWYkCJp0U9M`;
+
+                    let postData = {
+                        "event": {
+                            "token": token,
+                            "siteKey": '6LfuqQErAAAAAMQDHJ2ZNoOlnplbHGEqMT8-7ZMm',
+                            "expectedAction": "submit"
+                        }
+                    };
+                    let response = await fetch(url, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'Accept': 'application/json'
                         },
-                        body: JSON.stringify({ 'g-token': token })
+                        body: JSON.stringify(postData)
                     });
-                    if (response.status == 200) {
+
+                    let result = await response.json();
+
+                    if (result.tokenProperties.valid) {
                         sendMail();
-                    }
-                    else {
-                        let responseMessage = document.getElementById('responseMessage');
-                        responseMessage.innerHTML = 'Error: Can not verify RECAPTCHA';
+                    } else {
+                        responseMessage.innerHTML = 'Error: Can not verify Recaptcha!';
                         responseMessage.className = 'text-danger';
                     }
                 });
-            });
+            }
         }
 
         async function sendMail() {
