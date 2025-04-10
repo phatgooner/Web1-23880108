@@ -1,0 +1,8 @@
+<h1 class="pb-3">About Us</h1>
+{{#each data}}
+<div>
+    <img src="{{thumbpath}}" alt="{{name}}" class="float-start rounded-4 me-3">
+    <div class="text-black-50 text-justify pe-5">{{{summary}}}</div>
+    <a href="?request=aboutus/{{id}}" class="btn btn-link readmore ps-0">Read more</a>
+</div>
+{{/each}}

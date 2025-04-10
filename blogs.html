@@ -168,126 +168,13 @@
         crossorigin="anonymous"></script>
 
     <!--HandlebarsJS-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js"
-        integrity="sha512-E1dSFxg+wsfJ4HKjutk/WaCzK7S2wv1POn1RRPGh8ZK+ag9l244Vqxji3r6wgz9YBf6+vhQEYJZpSjqWFPg9gg=="
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.runtime.min.js"
+        integrity="sha512-WUaZk9J3oknQdKPT2wAfA0gEBG2371l1ACjiynLA/X28p07n1u59VFk7q1i83/bo7N9rqVdYKlnvwAAiwL36jQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/blogs.templates.js"></script>
     <script src="js/23880108.js"></script>
     <script src="js/handlebars-pagination-helper.js"></script>
 
-    <!--Templates-->
-    <script id="blogs-template" type="text/x-handlebars-template">
-        <h1>Blogs</h1>
-        {{#each data}}
-        <div class="my-5 clearfix">
-            <h4>{{name}}</h4>            
-            <p class="text-black-50">
-                by {{author}} in <a href="#" onclick="loadData('blogs/{{id}}', 'blogs-content-template', 'blogs')">Blog. {{id}}</a> on {{formatDate date}}. <a href="#" 
-                onclick="goToComments('{{id}}')">Comments ({{comments.length}})</a>
-            </p>
-            <img src="{{thumbpath}}" alt="{{name}}" class="rounded-4 float-start me-3">
-            <p class="text-justify pe-3 text-black-50">{{summary}}</p>
-            <a href="#" onclick="seeDetails('{{id}}')">Read more</a>            
-        </div>
-        {{/each}}
-
-        {{#pagination currentPage pageCount}}
-        <nav aria-label="Page navigation" id="blogs-pagination">
-            <ul class="pagination    ">
-                {{#each pages}}
-                {{#if isCurrent}}
-                <li class="page-item disabled" aria-current="page">
-                    <a class="page-link" href="#" onclick="loadBlogs('{{../../request}}', parseInt('{{page}}'))">{{page}}</a>
-                </li>
-                {{/if}}
-                {{#unless isCurrent}}
-                <li class="page-item"><a class="page-link" href="#" onclick="loadBlogs('{{../../request}}', parseInt('{{page}}'))">{{page}}</a></li>
-                {{/unless}}
-                {{/each}}
-            </ul>
-        </nav>
-        {{/pagination}}
-    </script>
-
-    <script id="blogs-categories-template" type="text/x-handlebars-template">
-        <h1>Categories</h1>
-        <ul class="my-5">        
-            {{#each data}}        
-            <li>
-                <a href="#" class="text-decoration-none text-black-50" onclick="loadBlogs('blogs/categories/{{id}}')">                
-                    {{name}}
-                </a>
-            </li>
-            {{/each}}
-        </ul>
-    </script>
-
-    <script id="blogs-content-template" type="text/x-handlebars-template">
-        <h1>Blogs</h1>
-        {{#each data}}
-        <div class="my-5 clearfix">
-            <h4>{{name}}</h4>
-            <p class="text-black-50">
-                by {{author}} in <a href="#" id="BlogId">Blog. {{id}}</a> on {{formatDate date}}. <a href="#comments">Comments
-                    ({{comments.length}})</a>
-            </p>
-            <img src="{{imagepath}}" alt="{{name}}" class="rounded-4 float-start img-fluid me-3">
-            <div class="text-justify pe-3 text-black-50">{{{description}}}</div>            
-        </div>
-        <div class="py-3" id="leave-comment">
-            <h3>Leave your comments</h3>
-            <form action="#" method="post" class="text-black-50" onsubmit="addComment(event)">
-                <div class="row">
-                    <div class="col-4">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name (Required)</label>
-                            <input
-                                type="text" class="form-control" name="name" id="name" placeholder="Enter your name" required/>                            
-                        </div>                        
-                    </div>
-                    <div class="col-4">
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="text" class="form-control" name="email" id="email" placeholder="Enter your email address" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
-                        </div>
-                    </div>                    
-                </div>
-                <div class="mb-3">                    
-                    <textarea class="form-control" name="comment" id="comment" rows="3" placeholder="Enter your comment" required></textarea>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="1" id="agree" required />
-                            <label class="form-check-label" for="agree"> Agree to terms and conditions </label>
-                        </div>  
-                    </div>
-                    <div class="col text-end">
-                        <button type="submit" class="btn btn-link">
-                            Submit Comment
-                        </button>                        
-                    </div>
-                </div> 
-                <div class="text-center py-2">
-                    <div class="text-success" id="responseMessage"></div>
-                </div>               
-            </form>
-        </div>
-        
-        <a name="comments"></a>
-        <div class="bg-dark text-white-50 p-2">
-            COMMENTS ({{comments.length}})
-        </div>
-        <div class="py-3">
-            {{#each comments}}
-                <div class="text-black-50">
-                    <p><b>{{name}} - {{formatDate date}}</b></p>
-                    <p class="text-justify">{{summary}}</p>
-                    <hr>
-                </div>
-            {{/each}}
-        </div>
-        {{/each}}
-    </script>
 
     <!-- Load Data -->
     <script>
@@ -357,7 +244,7 @@
                 }
             }
             catch (error) {
-                responseMessage.innerHTML = result.message;
+                responseMessage.innerHTML = error;
                 responseMessage.className = 'text-danger';
             }
         }

@@ -181,80 +181,12 @@
         crossorigin="anonymous"></script>
 
     <!--HandlebarsJS-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js"
-        integrity="sha512-E1dSFxg+wsfJ4HKjutk/WaCzK7S2wv1POn1RRPGh8ZK+ag9l244Vqxji3r6wgz9YBf6+vhQEYJZpSjqWFPg9gg=="
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.runtime.min.js"
+        integrity="sha512-WUaZk9J3oknQdKPT2wAfA0gEBG2371l1ACjiynLA/X28p07n1u59VFk7q1i83/bo7N9rqVdYKlnvwAAiwL36jQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/about.templates.js"></script>
     <script src="js/23880108.js"></script>
 
-    <!--Templates-->
-    <!-- About Us -->
-    <script id="about-us-template" type="text/x-handlebars-template">
-        <h1 class="pb-3">About Us</h1>
-        {{#each data}}
-        <div>
-            <img src="{{thumbpath}}" alt="{{name}}" class="float-start rounded-4 me-3">
-            <div class="text-black-50 text-justify pe-5">{{{summary}}}</div>
-            <a href="?request=aboutus/{{id}}" class="btn btn-link readmore ps-0">Read more</a>
-        </div>
-        {{/each}}
-    </script>
-
-    <!-- Details -->
-    <script id="details-template" type="text/x-handlebars-template">
-        <div class="container overflow-auto py-3">    
-        {{#each data}}
-            <h1 class="py-3">{{name}}</h1>
-            <img src="{{imagepath}}" alt="{{name}}" class="float-start rounded-4 me-4 mb-4">
-            <div class="text-justify">{{{description}}}</div>
-            {{/each}}
-            </div>
-    </script>
-
-    <!-- Our Vision -->
-    <script id="our-vision-template" type="text/x-handlebars-template">
-        <h1 class="pb-3">Our Vision</h1>
-        {{#each data}}
-        <div class="clearfix mb-3">
-            <a href="?request=visions/{{id}}" class="text-decoration-none">
-                <img src="{{thumbpath}}" alt="{{name}}" class="float-start rounded-4 me-3">
-                <h3 class="text-black">{{name}}</h3>
-                <div class="text-black-50 text-justify pe-3">{{summary}}</div>
-            </a>
-        </div>
-        {{/each}}             
-    </script>
-
-    <!-- Testimonials -->
-    <script id="testimonials-template" type="text/x-handlebars-template">
-        <div class="container">
-            <h1 class="text-white">Testimonials</h1>
-            <div class="row py-3">
-                {{#each data}}
-                <div class="col-md-4 col-sm-12 my-3">
-                    <p class="text-black-50 text-justify pe-3">{{summary}}</p>
-                    <span class="text-white">{{name}}</span> <br>
-                    <a href="#">{{email}}</a>
-                </div>
-                {{/each}}                
-            </div>
-        </div>
-    </script>
-
-    <!-- Our Team -->
-    <script id="our-team-template" type="text/x-handlebars-template">
-        <h1>Our Team</h1>
-        <div class="row py-3">
-            {{#each data}}
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <a href="?request=team/{{id}}" class="text-decoration-none">
-                    <img src="{{thumbpath}}" alt="{{name}}" class="mb-3 rounded-4 img-fluid">
-                    <h4 class="text-black">{{name}}</h4>
-                    <p class="text-black-50 mt-3 pe-1">{{summary}}</p>
-                </a>
-            </div>              
-            {{/each}}            
-        </div>
-    </script>
 
     <!-- Load Data -->
     <script>

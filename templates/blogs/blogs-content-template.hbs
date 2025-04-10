@@ -1,0 +1,68 @@
+<h1>Blogs</h1>
+{{#each data}}
+<div class="my-5 clearfix">
+    <h4>{{name}}</h4>
+    <p class="text-black-50">
+        by {{author}} in <a href="#" id="BlogId">Blog. {{id}}</a> on {{formatDate date}}. <a href="#comments">Comments
+            ({{comments.length}})</a>
+    </p>
+    <img src="{{imagepath}}" alt="{{name}}" class="rounded-4 float-start img-fluid me-3">
+    <div class="text-justify pe-3 text-black-50">{{{description}}}</div>
+</div>
+<div class="py-3" id="leave-comment">
+    <h3>Leave your comments</h3>
+    <form action="#" method="post" class="text-black-50" onsubmit="addComment(event)">
+        <div class="row">
+            <div class="col-4">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name (Required)</label>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Enter your name"
+                        required />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="text" class="form-control" name="email" id="email"
+                        placeholder="Enter your email address" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                        required />
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <textarea class="form-control" name="comment" id="comment" rows="3" placeholder="Enter your comment"
+                required></textarea>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" id="agree" required />
+                    <label class="form-check-label" for="agree"> Agree to terms and conditions </label>
+                </div>
+            </div>
+            <div class="col text-end">
+                <button type="submit" class="btn btn-link">
+                    Submit Comment
+                </button>
+            </div>
+        </div>
+        <div class="text-center py-2">
+            <div class="text-success" id="responseMessage"></div>
+        </div>
+    </form>
+</div>
+
+<a name="comments"></a>
+<div class="bg-dark text-white-50 p-2">
+    COMMENTS ({{comments.length}})
+</div>
+<div class="py-3">
+    {{#each comments}}
+    <div class="text-black-50">
+        <p><b>{{name}} - {{formatDate date}}</b></p>
+        <p class="text-justify">{{summary}}</p>
+        <hr>
+    </div>
+    {{/each}}
+</div>
+{{/each}}

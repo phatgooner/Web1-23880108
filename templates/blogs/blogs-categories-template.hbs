@@ -1,0 +1,10 @@
+<h1>Categories</h1>
+<ul class="my-5">
+    {{#each data}}
+    <li>
+        <a href="#" class="text-decoration-none text-black-50" onclick="loadBlogs('blogs/categories/{{id}}')">
+            {{name}}
+        </a>
+    </li>
+    {{/each}}
+</ul>

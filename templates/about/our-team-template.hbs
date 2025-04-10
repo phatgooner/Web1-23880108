@@ -1,0 +1,12 @@
+<h1>Our Team</h1>
+<div class="row py-3">
+    {{#each data}}
+    <div class="col-lg-3 col-md-6 col-sm-12">
+        <a href="?request=team/{{id}}" class="text-decoration-none">
+            <img src="{{thumbpath}}" alt="{{name}}" class="mb-3 rounded-4 img-fluid">
+            <h4 class="text-black">{{name}}</h4>
+            <p class="text-black-50 mt-3 pe-1">{{summary}}</p>
+        </a>
+    </div>
+    {{/each}}
+</div>

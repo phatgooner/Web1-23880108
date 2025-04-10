@@ -1,0 +1,7 @@
+<div class="container overflow-auto py-3">
+    {{#each data}}
+    <h1 class="py-3">{{name}}</h1>
+    <img src="{{imagepath}}" alt="{{name}}" class="float-start rounded-4 me-4 mb-4">
+    <div class="text-justify">{{{description}}}</div>
+    {{/each}}
+</div>
