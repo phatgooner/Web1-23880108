@@ -262,7 +262,6 @@
             responseMessage.className = 'text-success';
             responseMessage.innerHTML = '';
 
-
             grecaptcha.enterprise.ready(async () => {
                 let token = await grecaptcha.enterprise.execute('6LfuqQErAAAAAMQDHJ2ZNoOlnplbHGEqMT8-7ZMm', { action: 'submit' }).then(async function (token) {
                     let response = await fetch('verify.php', {
@@ -273,12 +272,10 @@
                         },
                         body: JSON.stringify({ 'g-token': token })
                     });
-                    // if (response.status == 200) {
-                    //     sendMail();
-                    // }
-                    try {
+
+                    try { //recaptcha theo backend cho host của Heroku
                         sendMail();
-                    } catch (error) {
+                    } catch (error) { //recaptcha theo frontend cho host của Vercel
                         token = await grecaptcha.enterprise.execute('6LfuqQErAAAAAMQDHJ2ZNoOlnplbHGEqMT8-7ZMm', { action: 'submit' });
 
                         let url = `https://recaptchaenterprise.googleapis.com/v1/projects/web1-23880108/assessments?key=AIzaSyB1_Rx55cQiaVJGJtyf3QrpSWYkCJp0U9M`;
@@ -310,43 +307,7 @@
                     }
                 });
             });
-
-            // let responseMessage = document.getElementById('responseMessage');
-            // responseMessage.className = 'text-success';
-            // responseMessage.innerHTML = '';
-
-            // grecaptcha.enterprise.ready(async function () {
-            //     let token = await grecaptcha.enterprise.execute('6LfuqQErAAAAAMQDHJ2ZNoOlnplbHGEqMT8-7ZMm', { action: 'submit' });
-
-            //     let url = `https://recaptchaenterprise.googleapis.com/v1/projects/web1-23880108/assessments?key=AIzaSyB1_Rx55cQiaVJGJtyf3QrpSWYkCJp0U9M`;
-
-            //     let postData = {
-            //         "event": {
-            //             "token": token,
-            //             "siteKey": '6LfuqQErAAAAAMQDHJ2ZNoOlnplbHGEqMT8-7ZMm',
-            //             "expectedAction": "submit"
-            //         }
-            //     };
-            //     let response = await fetch(url, {
-            //         method: 'POST',
-            //         headers: {
-            //             'Content-Type': 'application/json',
-            //             'Accept': 'application/json'
-            //         },
-            //         body: JSON.stringify(postData)
-            //     });
-
-            //     let result = await response.json();
-
-            //     if (result.tokenProperties.valid) {
-            //         sendMail();
-            //     } else {
-            //         responseMessage.innerHTML = 'Error: Can not verify Recaptcha!';
-            //         responseMessage.className = 'text-danger';
-            //     }
-            // });
-
-        }
+        };
 
         async function sendMail() {
             let responseMessage = document.getElementById('responseMessage');
@@ -360,7 +321,7 @@
                     subject: document.getElementById('subject').value,
                     message: document.getElementById('message').value,
                     copy: document.getElementById('copy').checked
-                }
+                };
 
                 let response = await fetch(`${AUTHENTICATE_API}/send`, {
                     method: 'POST',
@@ -386,7 +347,7 @@
                 responseMessage.innerHTML = error;
                 responseMessage.className = 'text-danger';
             }
-        }
+        };
     </script>
 </body>
 
