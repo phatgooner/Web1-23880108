@@ -173,13 +173,19 @@
 
         let searchParams = new URLSearchParams(location.search);
         let keyword = searchParams.get('keyword');
+        let request = searchParams.get('request');
         if (keyword) {
             keyword = keyword.trim();
             if (keyword != '') {
                 loadData(`search?keyword=${keyword}`, 'search-template', 'content');
             }
         }
-
+        if (request) {
+            request = request.trim();
+            if (request != '') {
+                loadData(request, 'details-template', 'content');
+            }
+        } 
     </script>
 </body>
 

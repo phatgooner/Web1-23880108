@@ -46,11 +46,11 @@ templates['search-template.hbs'] = template({"1":function(container,depth0,helpe
         return undefined
     };
 
-  return "<div class=\"py-4\">\r\n    <a class=\"text-decoration-none\" href=\"#\" onclick=\"loadData('"
+  return "<div class=\"py-4\">\r\n    <a class=\"text-decoration-none\" href=\"?request="
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"type") : depth0), depth0))
     + "/"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"id") : depth0), depth0))
-    + "', 'details-template', 'content')\">\r\n        <h1 class=\"text-black\">"
+    + "\">\r\n        <h1 class=\"text-black\">"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"name") : depth0), depth0))
     + "</h1>\r\n        <div class=\"text-black-50 text-justify\">"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"summary") : depth0), depth0))
